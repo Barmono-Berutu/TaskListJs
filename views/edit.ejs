@@ -1,0 +1,106 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Task List Js</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="row my-2">
+        <div class="col-md">
+          <h3 class="text-center fw-bold text-uppercase">Ubah Daftar Tugas</h3>
+          <hr />
+        </div>
+      </div>
+    </div>
+    <div class="container center-form">
+      <div class="row my-2">
+        <div class="col-md form-container w-100 d-flex justify-content-center">
+          <form style="width: 600px">
+            <div class="mb-3">
+              <label for="nama" class="form-label">Nama</label>
+              <input
+                type="text"
+                class="form-control"
+                id="nama"
+                name="nama"
+                value="<%= data.nama %>"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="namaTugas">Nama Tugas : </label>
+              <input
+                type="text"
+                class="form-control"
+                name="namaTugas"
+                id="namaTugas"
+                value="<%=data.namaTugas%>"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="waktu">Waktu : </label>
+              <input
+                type="time"
+                class="form-control"
+                name="waktu"
+                id="waktu"
+                value="<%=data.waktu%>"
+              />
+            </div>
+            <div class="d-flex justify-content-center">
+              <a href="/" class="btn btn-secondary me-2">Kembali</a>
+              <button
+                type="submit"
+                class="btn btn-primary"
+                name="simpan"
+                onclick="ubah('<%= data.id %>')"
+              >
+                Simpan
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function ubah(id) {
+        const nama = document.getElementById("nama").value;
+        const namaTugas = document.getElementById("namaTugas").value;
+        const waktu = document.getElementById("waktu").value;
+        fetch(`http://localhost:5000/edit/${id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            nama: nama,
+            namaTugas: namaTugas,
+            waktu: waktu,
+          }),
+        })
+          .then(() => {
+            window.location.href = "/";
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    </script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
